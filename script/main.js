@@ -16,6 +16,7 @@ var priceGross;
 var priceNet;
 var todayYear = new Date().getFullYear();
 var passengerAge;
+var discount;
 
 //3 Declare output references
 
@@ -33,19 +34,21 @@ if (tripKm >= 10 && tripKm <= 100000) {
     priceGross = priceKm * tripKm;
     passengerAge = todayYear - passengerYob;
     if (passengerAge < 18 ) {
+      discount = '20%';
       priceDiscount = priceGross * 0.2;
-      priceNet = priceGross - priceDiscount;
+      priceNet = priceGross.toFixed(2) - priceDiscount.toFixed(2);
       outputPrice.innerHTML = 'The total cost of the ticket is ' + priceNet + ' euro.';
-      outputDiscount.innerHTML = 'A discount of ' + priceDiscount*100 + '% was applied. the original price was ' + priceGross + ' euro.';
+      outputDiscount.innerHTML = 'A discount of ' + discount + '  was applied. the original price was ' + priceGross.toFixed(2) + ' euro.';
     }
     else if (passengerAge > 65) {
+      discount = '40%';
       priceDiscount = priceGross * 0.4;
-      priceNet = priceGross - priceDiscount;
+      priceNet = priceGross.toFixed(2) - priceDiscount.toFixed(2);
       outputPrice.innerHTML = 'The total cost of the ticket is ' + priceNet + ' euro.';
-      outputDiscount.innerHTML = 'A discount of ' + priceDiscount*100 + '% was applied. the original price was ' + priceGross + ' euro.';
+      outputDiscount.innerHTML = 'A discount of ' + discount + ' was applied. the original price was ' + priceGross.toFixed(2) + ' euro.';
     }
     else {
-      priceNet = priceGross;
+      priceNet = priceGross.toFixed(2);
       outputPrice.innerHTML = 'The total cost of the ticket is ' + priceNet + ' euro.';
       outputDiscount.innerHTML = 'We could not apply any discont.';
     }
@@ -55,6 +58,9 @@ if (tripKm >= 10 && tripKm <= 100000) {
   }
   else if (passengerYob >= todayYear) {
     outputDebug.innerHTML = 'Are you sure that your mum has even planned you?';
+  }
+  else if (isNaN(passengerYob)) {
+    outputDebug.innerHTML = 'Error 42: contact an admin to restart the universe.';
   }
 }
 else if (tripKm < 10) {
